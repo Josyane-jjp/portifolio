@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta nome="descripition" content="Esse é o mehor site de locação de imoveis">
+    <meta nome="keywords" content="ALUGUEL,locação, vila velha, vitória ,serra, espirito santo, imovel, apartamento,casa, loja">
+    <meta nome="author" content="Josyane de Jesus Pinto">
+    <title>BARBOZAENUNESIMOBILIARIA</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body class="BODYINDEX">
+    <table class="tabela">
+            <tr>
+                <th><button  onclick="document.location='QUEM-SOMOS.html'" style="background-color:#dcefee;color:rgb(79,80,80);">QUEM SOMOS</button></th>
+                <th><button  onclick="document.location='NOSSOS-IMOVEIS.html'" style="background-color:#dcefee;color:rgb(79,80,80);">NOSSOS IMOVEIS</button></th>
+                <th><button  onclick="document.location='CANAIS-DE-ATENDIMENTO.html'" style="background-color:#dcefee;color:rgb(79,80,80);">CANAIS DE ATENDIMENTO</button></th>  
+            </tr>  
+    </table>
+    <h1 class="paragrafo">Faça seu cadastro para rebeber<br> Atendimento Personalizado!</h1>   
+    <form class="formulario" id="cadastroInicial">
+         <label for="fname">NOME COMPLETO:</label><br>
+         <input type="text" id="fname" name="fname" placeholder="NOME"required><br>
+         <label for="CPF">CPF:</label><br>
+         <input type="text" id="CPF" name="CPF" placeholder="CPF"required><br>
+         <label for="tel">TEL/WHATSAPP:</label><br>
+         <input type="text" id="tel" name="tel" placeholder="tel"required><br>
+         <label for="nquartos">N° QUARTOS:</label><br>
+         <input type="text" id="nquartos" name="nquartos"><br>
+         <label for="cidade">CIDADE DESEJADA:</label><br>
+         <input type="text" id="cidade" name="cidade"><br>
+         <label for="bairro">BAIRRO DESEJADO:</label><br>
+         <input type="text" id="bairro" name="bairro"><br>
+         <HR>
+            <input type="radio" id="TEMP" name="PERIODO_LOC" value="TEMP">
+            <label for="TEMP">TEMPORADA</label><br>
+            <input type="radio" id="ANUAL" name="PERIODO_LOC" value="ANUAL">
+            <label for="ANUAL">ANUAL</label><br><BR>
+         <input type="submit" value="CADASTRAR">
+    </form>
+    <script SRC="JAVASCRIPT/INDEX.JS"></script>
+   
+</body>
+</html>

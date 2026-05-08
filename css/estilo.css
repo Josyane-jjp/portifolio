@@ -1,0 +1,27 @@
+body{
+    max-width: 1600px;
+}
+.BODYINDEX{
+    background-image: url("..//imagens/fundo\ .jpg");
+    background-size:100%;
+
+}
+.tabela{
+    text-align:left;
+    margin-left: 12%;
+    display: inline-block;
+
+}
+.paragrafo{
+            text-align:right;
+            margin-right: 8%;
+            font-size: x-large;
+            font-family:'Times New Roman', Times, serif;
+            color:white;
+}
+.formulario{
+    padding: 18px;
+    background-color:whitesmoke;
+    margin-right: 8%;
+    margin-left: 73%;
+}
