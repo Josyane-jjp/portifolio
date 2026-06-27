@@ -1,48 +1,439 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <!-- ========== META TAGS ========== -->
+    <!-- Define o conjunto de caracteres (UTF-8 para suportar acentos) -->
     <meta charset="UTF-8">
+    <!-- Define o viewport para responsividade em dispositivos móveis -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta nome="descripition" content="Esse é o mehor site de locação de imoveis">
-    <meta nome="keywords" content="ALUGUEL,locação, vila velha, vitória ,serra, espirito santo, imovel, apartamento,casa, loja">
-    <meta nome="author" content="Josyane de Jesus Pinto">
-    <title>Josyane Portifolio</title>
+    <!-- Descrição do site (usada pelo Google em resultados de busca) -->
+    <meta name="description" content="Plataforma de locação de imóveis em Vila Velha, Vitória e Serra - Espírito Santo">
+    <!-- Palavras-chave para SEO -->
+    <meta name="keywords" content="ALUGUEL, locação, vila velha, vitória, serra, espírito santo, imóvel, apartamento, casa, loja">
+    <!-- Autor da página -->
+    <meta name="author" content="Josyane de Jesus Pinto">
+    <!-- Título da aba do navegador -->
+    <title>Josyane Portfólio - Locação de Imóveis</title>
+    
+    <!-- ========== ESTILOS CSS ========== -->
+    <!-- Importa arquivo CSS externo para estilização -->
     <link rel="stylesheet" href="css/estilo.css">
+    
+    <!-- ========== ESTILOS INLINE - MODAL LGPD ========== -->
+    <!-- Estilos para o modal de termos e políticas LGPD -->
+    <style>
+        /* Overlay do modal - cobre toda a tela */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Fundo semi-transparente para destaque do modal */
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        /* Quando o modal está ativo, mostra com flex para centralizar */
+        .modal-overlay.ativo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Container do conteúdo do modal */
+        .modal-conteudo {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            /* Animação de entrada suave */
+            animation: deslizar 0.3s ease-out;
+        }
+
+        /* Animação de deslizar para baixo */
+        @keyframes deslizar {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Cabeçalho do modal */
+        .modal-header {
+            border-bottom: 2px solid #dcefee;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: #2c3e50;
+            font-size: 24px;
+        }
+
+        /* Corpo do modal - conteúdo dos termos */
+        .modal-body {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .modal-body h3 {
+            color: #2c3e50;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .modal-body p {
+            margin: 10px 0;
+        }
+
+        .modal-body ul {
+            margin: 10px 0 10px 20px;
+            padding-left: 15px;
+        }
+
+        .modal-body li {
+            margin: 8px 0;
+        }
+
+        /* Seção de aceite com checkbox */
+        .checkbox-aceite {
+            display: flex;
+            align-items: flex-start;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f0f8fa;
+            border-left: 4px solid #dcefee;
+            border-radius: 4px;
+        }
+
+        /* Checkbox personalizado */
+        .checkbox-aceite input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            margin-right: 12px;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+
+        .checkbox-aceite label {
+            flex: 1;
+            cursor: pointer;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .checkbox-aceite label strong {
+            color: #2c3e50;
+        }
+
+        /* Mensagem de erro para checkbox não marcado */
+        .erro-checkbox {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Rodapé do modal com botões */
+        .modal-footer {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            margin-top: 20px;
+            border-top: 1px solid #ecf0f1;
+            padding-top: 15px;
+        }
+
+        /* Estilos dos botões do modal */
+        .btn-modal {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        /* Botão de rejeitar (vermelho) */
+        .btn-rejeitar {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-rejeitar:hover {
+            background-color: #c0392b;
+        }
+
+        /* Botão de aceitar (verde) - desabilitado se checkbox não marcado */
+        .btn-aceitar {
+            background-color: #27ae60;
+            color: white;
+        }
+
+        .btn-aceitar:hover:not(:disabled) {
+            background-color: #229954;
+        }
+
+        .btn-aceitar:disabled {
+            background-color: #95a5a6;
+            cursor: not-allowed;
+        }
+
+        /* Link para abrir modal de termos */
+        .link-termos {
+            color: #3498db;
+            text-decoration: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .link-termos:hover {
+            text-decoration: underline;
+        }
+
+        /* Caixa de informações sobre aceite */
+        .info-aceite {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 4px;
+            padding: 10px 15px;
+            margin: 10px 0;
+            font-size: 13px;
+            color: #856404;
+        }
+
+        /* Caixa de aviso LGPD */
+        .aviso-lgpd {
+            background-color: #d4edda;
+            border: 1px solid #28a745;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 13px;
+            color: #155724;
+        }
+
+        .aviso-lgpd strong {
+            color: #0d4e1f;
+        }
+    </style>
 </head>
 <body class="BODYINDEX">
+    
+    <!-- ========== BARRA DE NAVEGAÇÃO ========== -->
+    <!-- Tabela para estrutura da barra de navegação com botões -->
     <table class="tabela">
-         <div>
-          <nav bar>
-            <tr>
-                <th><button  onclick="document.location='QUEM-SOMOS.html'" style="background-color:#dcefee;color:rgb(79,80,80);">QUEM SOMOS</button></th>
-                <th><button  onclick="document.location='NOSSOS-IMOVEIS.html'" style="background-color:#dcefee;color:rgb(79,80,80);">NOSSOS IMOVEIS</button></th>
-                <th><button  onclick="document.location='CANAIS-DE-ATENDIMENTO.html'" style="background-color:#dcefee;color:rgb(79,80,80);">CANAIS DE ATENDIMENTO</button></th>  
-            </tr>  
-          </nav bar>
-         </div>
+        <tr>
+            <!-- Botão para página "Quem Somos" -->
+            <th>
+                <button onclick="document.location='QUEM-SOMOS.html'" 
+                        style="background-color:#dcefee;color:rgb(79,80,80);">
+                    QUEM SOMOS
+                </button>
+            </th>
+            <!-- Botão para página "Nossos Imóveis" -->
+            <th>
+                <button onclick="document.location='NOSSOS-IMOVEIS.html'" 
+                        style="background-color:#dcefee;color:rgb(79,80,80);">
+                    NOSSOS IMÓVEIS
+                </button>
+            </th>
+            <!-- Botão para página "Canais de Atendimento" -->
+            <th>
+                <button onclick="document.location='CANAIS-DE-ATENDIMENTO.html'" 
+                        style="background-color:#dcefee;color:rgb(79,80,80);">
+                    CANAIS DE ATENDIMENTO
+                </button>
+            </th>  
+        </tr>  
     </table>
-    <h1 class="paragrafo">Faça seu cadastro para rebeber<br> Atendimento Personalizado!</h1>   
-    <form class="formulario" id="cadastroInicial">
-         <label for="fname">NOME COMPLETO:</label><br>
-         <input type="text" id="fname" name="fname" placeholder="NOME"required><br>
-         <label for="CPF">CPF:</label><br>
-         <input type="text" id="CPF" name="CPF" placeholder="CPF"required><br>
-         <label for="tel">TEL/WHATSAPP:</label><br>
-         <input type="text" id="tel" name="tel" placeholder="tel"required><br>
-         <label for="nquartos">N° QUARTOS:</label><br>
-         <input type="text" id="nquartos" name="nquartos"><br>
-         <label for="cidade">CIDADE DESEJADA:</label><br>
-         <input type="text" id="cidade" name="cidade"><br>
-         <label for="bairro">BAIRRO DESEJADO:</label><br>
-         <input type="text" id="bairro" name="bairro"><br>
-         <HR>
-            <input type="radio" id="TEMP" name="PERIODO_LOC" value="TEMP">
-            <label for="TEMP">TEMPORADA</label><br>
-            <input type="radio" id="ANUAL" name="PERIODO_LOC" value="ANUAL">
-            <label for="ANUAL">ANUAL</label><br><BR>
-         <input type="submit" value="CADASTRAR">
+
+    <!-- ========== CABEÇALHO PRINCIPAL ========== -->
+    <!-- Título principal da página -->
+    <h1 class="paragrafo">
+        Faça seu cadastro para receber<br>
+        <strong>Atendimento Personalizado!</strong>
+    </h1>   
+
+    <!-- ========== FORMULÁRIO DE CADASTRO ========== -->
+    <!-- Formulário com ID "cadastroInicial" para capturar eventos via JavaScript -->
+    <form class="formulario" id="cadastroInicial" novalidate>
+        
+        <!-- ========== SEÇÃO 1: DADOS PESSOAIS ========== -->
+        
+        <!-- Campo: Nome Completo -->
+        <!-- Obrigatório (required) - Será validado no backend -->
+        <label for="fname"><strong>NOME COMPLETO:</strong></label><br>
+        <input type="text" 
+               id="fname" 
+               name="fname" 
+               placeholder="Digite seu nome completo"
+               required
+               maxlength="255"><br>
+
+        <!-- Campo: CPF -->
+        <!-- Obrigatório e único no banco de dados -->
+        <label for="CPF"><strong>CPF:</strong></label><br>
+        <input type="text" 
+               id="CPF" 
+               name="CPF" 
+               placeholder="123.456.789-00"
+               required
+               maxlength="14"><br>
+
+        <!-- Campo: Telefone/WhatsApp -->
+        <!-- Obrigatório - Usado para contato direto -->
+        <label for="tel"><strong>TEL/WHATSAPP:</strong></label><br>
+        <input type="tel" 
+               id="tel" 
+               name="tel" 
+               placeholder="(XX) 9XXXX-XXXX"
+               required
+               maxlength="20"><br>
+
+        <!-- ========== SEÇÃO 2: PREFERÊNCIAS DE IMÓVEL ========== -->
+        
+        <!-- Campo: Número de Quartos -->
+        <!-- Opcional - Ajuda a personalizar o atendimento -->
+        <label for="nquartos"><strong>Nº DE QUARTOS DESEJADO:</strong></label><br>
+        <input type="number" 
+               id="nquartos" 
+               name="nquartos" 
+               placeholder="Número de quartos"
+               min="1"
+               max="10"><br>
+
+        <!-- Campo: Cidade Desejada -->
+        <!-- Opcional - Usado para filtrar imóveis por localização -->
+        <label for="cidade"><strong>CIDADE DESEJADA:</strong></label><br>
+        <input type="text" 
+               id="cidade" 
+               name="cidade" 
+               placeholder="Ex: Vila Velha"
+               maxlength="255"><br>
+
+        <!-- Campo: Bairro Desejado -->
+        <!-- Opcional - Oferece mais especificidade na localização -->
+        <label for="bairro"><strong>BAIRRO DESEJADO:</strong></label><br>
+        <input type="text" 
+               id="bairro" 
+               name="bairro" 
+               placeholder="Ex: Centro"
+               maxlength="255"><br>
+
+        <!-- Separador visual -->
+        <HR>
+
+        <!-- ========== SEÇÃO 3: TIPO DE PERÍODO ========== -->
+        
+        <!-- Rádio Button 1: Temporada -->
+        <!-- Período de locação curto (férias, eventos) -->
+        <input type="radio" 
+               id="TEMP" 
+               name="PERIODO_LOC" 
+               value="TEMPORADA"
+               required>
+        <label for="TEMP"><strong>TEMPORADA</strong></label><br>
+
+        <!-- Rádio Button 2: Anual -->
+        <!-- Período de locação longo (aluguel comum) -->
+        <input type="radio" 
+               id="ANUAL" 
+               name="PERIODO_LOC" 
+               value="ANUAL"
+               required>
+        <label for="ANUAL"><strong>ANUAL</strong></label><br><br>
+
+        <!-- ========== SEÇÃO 4: CONFORMIDADE LGPD ========== -->
+        
+        <!-- Aviso informativo sobre proteção de dados -->
+        <div class="aviso-lgpd">
+            <strong>🔒 Proteção de Dados:</strong> Seus dados pessoais serão 
+            processados de acordo com a <strong>Lei Geral de Proteção de Dados (LGPD)</strong>. 
+            Você tem direito de acessar, corrigir ou solicitar a exclusão de seus dados.
+        </div>
+
+        <!-- Checkbox obrigatório de aceite dos termos -->
+        <!-- Este é um requisito legal para conformidade LGPD -->
+        <div style="background-color: #f0f8fa; border-left: 4px solid #dcefee; padding: 15px; border-radius: 4px; margin: 15px 0;">
+            <div style="display: flex; align-items: flex-start;">
+                <!-- Checkbox que valida se foi marcado -->
+                <input type="checkbox" 
+                       id="aceiteTermos" 
+                       name="aceiteTermos"
+                       required
+                       style="margin-right: 10px; margin-top: 2px; width: 18px; height: 18px; cursor: pointer;">
+                
+                <!-- Label com link para abrir modal dos termos -->
+                <label for="aceiteTermos" style="cursor: pointer; margin: 0;">
+                    Concordo com os 
+                    <!-- Link clicável que abre o modal -->
+                    <span class="link-termos" onclick="abrirModalTermos(event)">
+                        Termos de Uso, Política de Privacidade e Política de Proteção de Dados (LGPD)
+                    </span>
+                </label>
+            </div>
+            <!-- Mensagem de erro que aparece se o usuário tentar enviar sem aceitar -->
+            <div class="erro-checkbox" id="erroAceite">
+                ⚠️ Você deve aceitar os termos para continuar
+            </div>
+        </div>
+
+        <!-- ========== BOTÃO DE ENVIO ========== -->
+        <!-- Botão para submeter o formulário (acionará evento JavaScript) -->
+        <input type="submit" 
+               value="CADASTRAR"
+               style="padding: 12px 30px; font-size: 16px; font-weight: bold; cursor: pointer;">
     </form>
-    <script SRC="JAVASCRIPT/INDEX.JS"></script>
-   
+
+    <!-- ========== MODAL DOS TERMOS LGPD ========== -->
+    <!-- Modal que abre quando o usuário clica no link dos termos -->
+    <div class="modal-overlay" id="modalTermos">
+        <div class="modal-conteudo">
+            <!-- Cabeçalho do modal -->
+            <div class="modal-header">
+                <h2>📋 Termos de Uso, Política de Privacidade e Proteção de Dados (LGPD)</h2>
+            </div>
+            
+            <!-- Corpo do modal com conteúdo dos termos -->
+            <!-- Conteúdo carregado dinamicamente via JavaScript -->
+            <div class="modal-body" id="conteudoTermos">
+                <!-- Conteúdo será inserido aqui pelo JavaScript -->
+            </div>
+            
+            <!-- Rodapé do modal com botões -->
+            <div class="modal-footer">
+                <!-- Botão para fechar o modal -->
+                <button class="btn-modal btn-rejeitar" 
+                        onclick="fecharModalTermos()"
+                        type="button">
+                    Fechar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== IMPORTAR ARQUIVO JAVASCRIPT ========== -->
+    <!-- Carrega o arquivo JavaScript externo com toda a lógica de formulário e validação -->
+    <script src="JAVASCRIPT/INDEX.JS"></script>
+    
 </body>
 </html>
